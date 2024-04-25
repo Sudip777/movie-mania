@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MovieMania.Data;
+using MovieMania.Interfaces.Repositories;
+using MovieMania.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,7 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 
 
 
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

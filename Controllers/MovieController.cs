@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieMania.Data;
 using MovieMania.DTOs.Movie;
 using MovieMania.Helpers;
+using MovieMania.Interfaces.Repositories;
 using MovieMania.Mappers;
 
 namespace MovieMania.Controllers
@@ -13,9 +14,11 @@ namespace MovieMania.Controllers
     public class MovieController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
+        private readonly IMovieRepository _movieRepository;
 
-        public MovieController(ApplicationDBContext context)
+        public MovieController(ApplicationDBContext context, IMovieRepository movieRepository)
         {
+            _movieRepository = movieRepository;
             _context = context;
         }
 
@@ -24,7 +27,7 @@ namespace MovieMania.Controllers
         public async Task<IActionResult> GetAll()
         {
             // ToList has defered execution under the hood
-            var movies = await _context.Movie.ToListAsync();
+            var movies = await _movieRepository.GetAllAsync();
             var moviesDto = movies.Select(s => s.ToMovieDto());
             return Ok(moviesDto);
         }
@@ -33,7 +36,7 @@ namespace MovieMania.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var movie = await _context.Movie.FindAsync(id);
+            var movie = await _movieRepository.GetByIdAsync( id);
 
             if (movie == null)
             {
@@ -47,8 +50,7 @@ namespace MovieMania.Controllers
         public async Task<IActionResult> Create([FromBody] CreateMovieRequestDto movieDto)
         {
             var movieModel = movieDto.ToMovieFromCreateDTO();
-            await _context.Movie.AddAsync(movieModel);
-            await _context.SaveChangesAsync();
+            await _movieRepository.CreateAsync(movieModel);
             return CreatedAtAction(nameof(GetById), new { id = movieModel.Id }, movieModel.ToMovieDto());
 
         }
@@ -58,16 +60,11 @@ namespace MovieMania.Controllers
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateMovieRequestDto updateDto)
 
         {
-            var movieModel = await _context.Movie.FirstOrDefaultAsync(x => x.Id == id);
+            var movieModel = await _movieRepository.UpdateAsync(id, updateDto);
             if (movieModel == null)
             {
                 return NotFound();
             }
-            movieModel.MovieName = updateDto.MovieName;
-            movieModel.Rating = updateDto.Rating;
-            movieModel.ReleasedDate = updateDto.ReleasedDate;
-
-            await _context.SaveChangesAsync();
             return Ok(movieModel.ToMovieDto());
 
         }
@@ -77,15 +74,12 @@ namespace MovieMania.Controllers
 
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var movie = await _context.Movie.FirstOrDefaultAsync(x => x.Id == id);
+            var movie = await _movieRepository.DeleteAsync(id);
 
             if (movie == null)
             {
                 return NotFound();
             }
-
-             _context.Movie.Remove(movie);
-            await _context.SaveChangesAsync();
             return NoContent();
 
         }

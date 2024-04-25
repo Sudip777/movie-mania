@@ -134,3 +134,4 @@ C:\Users\sudip\Desktop\Lab\MovieMania\MovieMania\bin\Debug\net8.0\runtimes\win\l
 C:\Users\sudip\Desktop\Lab\MovieMania\MovieMania\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 C:\Users\sudip\Desktop\Lab\MovieMania\MovieMania\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\sudip\Desktop\Lab\MovieMania\MovieMania\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\sudip\Desktop\Lab\MovieMania\MovieMania\obj\Debug\net8.0\MovieMania.sourcelink.json
