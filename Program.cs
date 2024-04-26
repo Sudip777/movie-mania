@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using MovieMania.Data;
 using MovieMania.Interfaces.Repositories;
 using MovieMania.Repositories;
@@ -13,6 +14,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//NewtonSoft: To prevent Object Cycles
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    {
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
+
 //Setting up connection to the database , connection string
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
 {
@@ -20,8 +27,9 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 });
 
 
-
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

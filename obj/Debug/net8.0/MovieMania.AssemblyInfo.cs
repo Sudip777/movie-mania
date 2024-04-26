@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MovieMania")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7fb98ebd01c9bf7da3704ee5fdef2f9697e515a2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb5594aa64fbcbe11938ec3a4112151c30375a20")]
 [assembly: System.Reflection.AssemblyProductAttribute("MovieMania")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MovieMania")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -24,7 +24,7 @@ namespace MovieMania.Repositories
             return movieModel;
         }
 
-        public async Task<Movie> DeleteAsync(int id)
+        public async Task<Movie?> DeleteAsync(int id)
         {
             var movieModel = await _context.Movie.FirstOrDefaultAsync(x => x.Id == id);
           if(movieModel == null)
@@ -39,15 +39,20 @@ namespace MovieMania.Repositories
 
         public async Task<List<Movie>> GetAllAsync()
         {
-            return await  _context.Movie.ToListAsync();
+            return await  _context.Movie.Include(c=>c.Comments).ToListAsync();
         }
 
         public async Task<Movie?> GetByIdAsync(int id)
         {
-            return await _context.Movie.FindAsync(id);
+            return await _context.Movie.Include(c=>c.Comments).FirstOrDefaultAsync(i=> i.Id == id);
         }
 
-        public async Task<Movie> UpdateAsync(int id, UpdateMovieRequestDto movieDto)
+        public async Task<bool> MovieExists(int id)
+        {
+            return await  _context.Movie.AnyAsync(s => s.Id == id);
+        }
+
+        public async Task<Movie?> UpdateAsync(int id, UpdateMovieRequestDto movieDto)
         {
             var existingMovie = await _context.Movie.FirstOrDefaultAsync(x => x.Id == id);
             if(existingMovie == null)
@@ -56,7 +61,7 @@ namespace MovieMania.Repositories
             }
 
            existingMovie.MovieName = movieDto.MovieName;
-          existingMovie.Rating = movieDto.Rating;
+           existingMovie.Rating = movieDto.Rating;
            existingMovie.ReleasedDate = movieDto.ReleasedDate;
 
 

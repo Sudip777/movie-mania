@@ -13,7 +13,8 @@ namespace MovieMania.Mappers
                 Id = movieModel.Id,
                 MovieName = movieModel.MovieName,
                 Rating = movieModel.Rating,
-                ReleasedDate = movieModel.ReleasedDate
+                ReleasedDate = movieModel.ReleasedDate,
+                Comments = movieModel.Comments.Select(c=>c.ToCommentDto()).ToList()
             };
         }
 
@@ -25,6 +26,8 @@ namespace MovieMania.Mappers
                 Rating = movieDto.Rating,
                 ReleasedDate = movieDto.ReleasedDate,
             };
+
+
 
         }
     }
