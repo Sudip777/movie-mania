@@ -10,6 +10,8 @@ namespace MovieMania.Interfaces.Repositories
         Task<Comment?> GetByIdAsync(int id);
 
         Task<Comment> CreateAsync(Comment commentModel);
+
+        Task<Comment?> DeleteAsync(int id);
        
     }
 }

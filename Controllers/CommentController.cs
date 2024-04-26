@@ -56,6 +56,19 @@ namespace MovieMania.Controllers
             return CreatedAtAction(nameof(GetById), new { id = commentModel }, commentModel.ToCommentDto());
         }
 
+        [HttpDelete]
+        [Route("{id")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            var commentModel = await _commentRepository.DeleteAsync(id);
+            
+
+            if(commentModel == null)
+            {
+                return NotFound("Comment doesn't exist");
+            }
+            return Ok(commentModel);
+        }
 
     }
 }

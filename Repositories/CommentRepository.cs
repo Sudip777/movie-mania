@@ -26,9 +26,20 @@ namespace MovieMania.Repositories
 
         }
 
-        public Task<Comment> CreateAsync(CommentDto commentModel)
+       
+
+        public async Task<Comment?> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var commentModel = await _context.Comment.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(commentModel == null)
+            {
+                return null;
+            }
+
+             _context.Comment.Remove(commentModel);
+            await _context.SaveChangesAsync();
+            return commentModel;
         }
 
         public async Task<List<Comment>> GetAllAsync()
