@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MovieMania")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9394206e392bec9d5af601ae214c6731c8caf25a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+24149d4f28c8e336964ea3127713f0dc7f0e6154")]
 [assembly: System.Reflection.AssemblyProductAttribute("MovieMania")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MovieMania")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

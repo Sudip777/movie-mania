@@ -80,5 +80,19 @@ namespace MovieMania.Controllers
             return Ok(commentModel);
         }
 
+        [HttpPut]
+        [Route("{id:int}")]
+        public async Task<IActionResult> Update([FromRoute] int id,  UpdateCommentRequestDto updateDto)
+        {
+            var comment = await _commentRepository.UpdateAsync(id,updateDto.ToCommentFromUpdate());
+
+            if(comment == null)
+            {
+                NotFound("Comment Not Found");
+            }
+
+            return Ok(comment.ToCommentDto());
+        }
+
     }
 }
