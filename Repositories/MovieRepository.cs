@@ -46,8 +46,25 @@ namespace MovieMania.Repositories
             {
                 movies = movies.Where(s => s.MovieName.Contains(query.MovieName));
             }
+
+            if (!string.IsNullOrWhiteSpace(query.SortBy))
+            {
+                if (query.SortBy.Equals("Rating", StringComparison.OrdinalIgnoreCase))
+                {
+                    if ((bool)query.IsDescending)
+                    {
+                        movies = movies.OrderByDescending(s => s.Rating);
+                    }
+                    else
+                    {
+                        movies = movies.OrderBy(s => s.Rating);
+                    }
+                }
+            }
+
             return await movies.ToListAsync();
         }
+
 
         public async Task<Movie?> GetByIdAsync(int id)
         {
