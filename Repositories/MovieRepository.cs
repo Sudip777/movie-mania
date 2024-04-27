@@ -60,9 +60,11 @@ namespace MovieMania.Repositories
                         movies = movies.OrderBy(s => s.Rating);
                     }
                 }
-            }
 
-            return await movies.ToListAsync();
+
+            }
+            var skipNumber = (query.PageNumber - 1) * query.PageSize;
+            return await movies.Skip(skipNumber).Take(query.PageSize).ToListAsync();
         }
 
 
