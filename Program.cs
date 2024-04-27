@@ -14,7 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//NewtonSoft: To prevent Object Cycles
+//NewtonSoft: To prevent Object C
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
     {
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;

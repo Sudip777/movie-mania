@@ -26,6 +26,10 @@ namespace MovieMania.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+
             // ToList has defered execution under the hood
             var movies = await _movieRepository.GetAllAsync();
             var moviesDto = movies.Select(s => s.ToMovieDto());
@@ -33,9 +37,14 @@ namespace MovieMania.Controllers
         }
 
         // Model Binding under the hood that convert {id} into id
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+
             var movie = await _movieRepository.GetByIdAsync( id);
 
             if (movie == null)
@@ -49,6 +58,11 @@ namespace MovieMania.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateMovieRequestDto movieDto)
         {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+
             var movieModel = movieDto.ToMovieFromCreateDTO();
             await _movieRepository.CreateAsync(movieModel);
             return CreatedAtAction(nameof(GetById), new { id = movieModel.Id }, movieModel.ToMovieDto());
@@ -56,10 +70,14 @@ namespace MovieMania.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateMovieRequestDto updateDto)
 
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+
             var movieModel = await _movieRepository.UpdateAsync(id, updateDto);
             if (movieModel == null)
             {
@@ -70,10 +88,13 @@ namespace MovieMania.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
 
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var movie = await _movieRepository.DeleteAsync(id);
 
             if (movie == null)
