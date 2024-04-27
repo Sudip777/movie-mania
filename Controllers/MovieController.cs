@@ -24,14 +24,15 @@ namespace MovieMania.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
 
             // ToList has defered execution under the hood
-            var movies = await _movieRepository.GetAllAsync();
+            //var movies = await _movieRepository.GetAllAsync(); Before filtering
+            var movies = await _movieRepository.GetAllAsync(query);
             var moviesDto = movies.Select(s => s.ToMovieDto());
             return Ok(moviesDto);
         }

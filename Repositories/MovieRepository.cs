@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieMania.Data;
 using MovieMania.DTOs.Movie;
+using MovieMania.Helpers;
 using MovieMania.Interfaces.Repositories;
 using MovieMania.Models;
 using System.Reflection.Metadata.Ecma335;
@@ -37,9 +38,15 @@ namespace MovieMania.Repositories
             return movieModel;
         }
 
-        public async Task<List<Movie>> GetAllAsync()
+        public async Task<List<Movie>> GetAllAsync(QueryObject query)
         {
-            return await  _context.Movie.Include(c=>c.Comments).ToListAsync();
+            var movies =   _context.Movie.Include(c => c.Comments).AsQueryable();
+            
+            if(!string.IsNullOrWhiteSpace(query.MovieName))
+            {
+                movies = movies.Where(s => s.MovieName.Contains(query.MovieName));
+            }
+            return await movies.ToListAsync();
         }
 
         public async Task<Movie?> GetByIdAsync(int id)
